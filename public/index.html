@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="throughput">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throughput Test</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./main.css">
+  </head>
+  <body ng-controller="mainCtrl">
+
+    <h1>Throughput Test</h1>
+    <div class="form">
+      <input type="text" placeholder="Client IP" />
+      <input type="text" placeholder="Server IP" />
+    </div>
+
+    <div class="results-graphs">
+      <div class="results">
+        <ol>
+          <li ng-repeat="res in results track by $index"><p>{{res}}</p></li>
+        </ol>
+      </div>
+
+      <div class="results-r">
+        <ol>
+          <li ng-repeat="resR in resultsReverse track by $index"><p>{{resR}}</p></li>
+        </ol>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/mainCtrl.js"></script>
+    <script src="./js/mainSvc.js"></script>
+  </body>
+</html>

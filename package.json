@@ -1,0 +1,26 @@
+{
+  "name": "throughput-ubiquiti",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "child_process": "^1.0.2",
+    "express": "^4.15.2",
+    "remote-exec": "0.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilliamCox7/throughput-ubiquiti.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WilliamCox7/throughput-ubiquiti/issues"
+  },
+  "homepage": "https://github.com/WilliamCox7/throughput-ubiquiti#readme"
+}
