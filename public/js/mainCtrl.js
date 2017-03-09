@@ -34,14 +34,10 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
     $scope.results.push(Number(data[0]).toFixed(1));
     $scope.resultsReverse.shift();
     $scope.resultsReverse.push(Number(data[1]).toFixed(1));
-    $scope.serverMessage = 'Server Connected!';
+    if ($scope.serverMessage !== 'Server Connected!' && $scope.serverMessage !== 'Server Disconnected...') {
+      $scope.serverMessage = 'Server Connected!';
+    }
   });
-
-  // socket.on('tcpR', function(data) {
-  //   $scope.resultsReverse.shift();
-  //   $scope.resultsReverse.push(Number(data).toFixed(1));
-  //   $scope.serverMessage = 'Server Connected!';
-  // });
 
   $scope.stop = function(clientIp, serverIp, username, password) {
     mainSvc.stopServer(clientIp, serverIp, username, password).then(function(result) {
@@ -49,5 +45,18 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
     });
   };
 
+  $scope.resultsHistory = [null, null, null, null, null, null, null, null, null, null, null, null, null];
+  function getHistory() {
+    mainSvc.getHistory().then(function(history) {
+      for (var i = history.length-1; i >= history.length-13; i--) {
+        if (history[i]) {
+          $scope.resultsHistory.shift();
+          $scope.resultsHistory.push(Number(history[i][1]));
+        }
+      }
+      $scope.historyMessage = 'Displaying last session...';
+    });
+  }
+  getHistory();
 
 });

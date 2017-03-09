@@ -41,26 +41,32 @@ input:focus {outline:0;}
           transform: rotate(45deg);
 }
 
-.form .auth {
+.auth {
   opacity: 0;
   position: absolute;
   width: 192px;
   background: slategray;
   border-radius: 3px;
-  margin-left: 203px;
-  margin-top: 70px;
+  margin-left: calc((100% - 138px) / 2);
+  margin-top: 13px;
   padding: 5px;
   -webkit-transition: opacity 0.5s ease-out;
   transition: opacity 0.5s ease-out;
 }
 
-.form .auth input {
+.auth input {
   margin-left: 0px;
   margin-top: 0px;
   width: 158px;
+  padding: 10px;
+  border: solid 2px slategray;
+  color: slategray;
+  border-radius: 2px;
+  font-weight: bold;
+  background: #242738;
 }
 
-.form .auth p {
+.auth p {
   font-size: 12px;
   padding: 4px;
   color: #242738;
@@ -141,6 +147,7 @@ input:focus {outline:0;}
 .server-message {
   text-align: center;
   color: slategray;
+  margin-bottom: 20px;
 }
 
 .results {
@@ -154,6 +161,17 @@ input:focus {outline:0;}
 }
 
 .results-r {
+  min-width: 500px;
+  height: 200px;
+  padding: 20px;
+  margin: 20px;
+  border: solid 2px slategray;
+  border-radius: 2px;
+  margin-top: 0px;
+  background: #242738;
+}
+
+.history {
   min-width: 500px;
   height: 200px;
   padding: 20px;

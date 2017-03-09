@@ -21,7 +21,8 @@ app.get('/clientIp', function(req, res) {
 });
 
 //192.168.127.233
-var switchedOn = false; serverIp = '192.168.127.233';
+var switchedOn = false; var serverIp = '192.168.127.233';
+var terminate = false;
 var io = require('socket.io').listen(8080);
 io.sockets.on('connection', function (socket) {
     setInterval(function() {
@@ -30,7 +31,9 @@ io.sockets.on('connection', function (socket) {
         exec('./iperf/iperf3.exe', ['-c', serverIp, '-i', 1, '-t', 1, '-J'], function(err, data) {
           if (!err) {
             var d = JSON.parse(data);
-            var mbps = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1);
+            if (d) {
+              var mbps = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1);
+            }
           } else {
             console.log('err');
           }
@@ -38,11 +41,29 @@ io.sockets.on('connection', function (socket) {
           exec('./iperf/iperf3.exe', ['-c', serverIp, '-i', 1, '-t', 1, '-R', '-J'], function(errR, dataR) {
             if (!err) {
               var d = JSON.parse(dataR);
-              var mbpsR = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1);
+              if (d) {
+                console.log(d.intervals[0]);
+                var mbpsR = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1);
+              }
               socket.emit('tcp', [mbps, mbpsR]);
             } else {
               console.log('err');
             }
+
+            if (terminate) {
+              console.log(username);
+              var connection_options = {
+                port: 22,
+                username: username,
+                password: password
+              }
+              rexec(serverIp, 'pkill iperf3', connection_options, function(err) {
+                console.log('*******SERVER DISCONNECTED*******');
+                console.log(err);
+              });
+              terminate = false;
+            }
+
           });
 
         });
@@ -51,11 +72,14 @@ io.sockets.on('connection', function (socket) {
     }, 1500);
 });
 
+var username, password;
 app.post('/startServer', function(req, res) {
+  username = req.body.username;
+  password = req.body.password;
   var connection_options = {
     port: 22,
-    username: req.body.username,
-    password: req.body.password
+    username: username,
+    password: password
   }
   serverIp = req.body.serverIp;
   rexec(serverIp, 'iperf3 -s', connection_options, function(err) {
@@ -66,17 +90,19 @@ app.post('/startServer', function(req, res) {
 });
 
 app.post('/stopServer', function(req, res) {
-  var connection_options = {
-    port: 22,
-    username: req.body.username,
-    password: req.body.password
-  }
-  rexec(req.body.serverIp, 'pkill iperf3', connection_options, function(err) {
-    console.log('*******SERVER DISCONNECTED*******');
-    console.log(err);
-  });
+  username = req.body.username;
+  password = req.body.password;
+  terminate = true;
   switchedOn = false;
-  res.status(200).send('Server is disconnected...');
+  res.status(200).send('Server Disconnected...');
+});
+
+app.get('/getHistory', function(req, res) {
+  var d = new Date();
+  res.status(200).send([
+    [d, 33.4],
+    [d, 55.3]
+  ]);
 });
 
 /* SERVER */

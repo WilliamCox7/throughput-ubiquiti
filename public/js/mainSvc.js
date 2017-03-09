@@ -26,4 +26,12 @@ angular.module('throughput').service('mainSvc', function($http) {
       return result.data;
     });
   }
+  this.getHistory = function() {
+    return $http({
+      method: 'GET',
+      url: '/getHistory'
+    }).then(function(history) {
+      return history.data;
+    });
+  }
 });
