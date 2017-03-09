@@ -45,8 +45,8 @@ app.post('/startServer', function(req, res) {
   serverIp = req.body.serverIp;
   rexec(serverIp, 'iperf3 -s', connection_options, function(err) {
     switchedOn = true;
-    res.status(200).send('Server is on...');
   });
+  res.status(200).send('Server is connecting...');
 });
 
 /* SERVER */

@@ -10,6 +10,7 @@
   <body ng-controller="mainCtrl">
 
     <h1>Throughput Test</h1>
+
     <div class="form">
       <input type="text" placeholder="Client IP" ng-model="clientIp" />
       <input type="text" placeholder="Server IP" ng-change="auth(serverIp)" ng-model="serverIp" />
@@ -36,6 +37,10 @@
           <li ng-repeat="resR in resultsReverse track by $index" ng-style="{height: '{{(resR/100)*158}}px'}"><p>{{resR}}</p></li>
         </ol>
       </div>
+    </div>
+
+    <div class="server-message">
+      {{serverMessage}}
     </div>
 
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>

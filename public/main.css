@@ -134,6 +134,11 @@ input:focus {outline:0;}
           justify-content: center;
 }
 
+.server-message {
+  text-align: center;
+  color: slategray;
+}
+
 .results {
   min-width: 500px;
   height: 200px;
@@ -159,9 +164,9 @@ ol {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 100%;
   -webkit-box-align: end;
       -ms-flex-align: end;
@@ -172,6 +177,7 @@ li {
   background: slategray;
   border-radius: 2px;
   width: 32px;
+  margin-right: 3px;
 }
 
 li p {
