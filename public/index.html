@@ -11,25 +11,35 @@
 
     <h1>Throughput Test</h1>
     <div class="form">
-      <input type="text" placeholder="Client IP" />
-      <input type="text" placeholder="Server IP" />
+      <input type="text" placeholder="Client IP" ng-model="clientIp" />
+      <input type="text" placeholder="Server IP" ng-change="auth(serverIp)" ng-model="serverIp" />
+      <button ng-click="start()">Start</button>
+      <div class="auth">
+        <div class="corner"></div>
+        <p>Please enter the credentials for {{serverIp}}. Then click start to begin.</p>
+        <input type="text" placeholder="username" />
+        <input type="password" placeholder="password" / />
+      </div>
     </div>
 
     <div class="results-graphs">
       <div class="results">
+        <div class="heading"><p>Sending</p><span>0.0 Mbps</span></div>
         <ol>
-          <li ng-repeat="res in results track by $index"><p>{{res}}</p></li>
+          <li ng-repeat="res in results track by $index" ng-style="{height: '{{(res/100)*158}}px'}"><p>{{res}}</p></li>
         </ol>
       </div>
 
       <div class="results-r">
+        <div class="heading"><p>Recieving</p><span>0.0 Mbps</span></div>
         <ol>
-          <li ng-repeat="resR in resultsReverse track by $index"><p>{{resR}}</p></li>
+          <li ng-repeat="resR in resultsReverse track by $index" ng-style="{height: '{{(resR/100)*158}}px'}"><p>{{resR}}</p></li>
         </ol>
       </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="./js/app.js"></script>
     <script src="./js/mainCtrl.js"></script>
     <script src="./js/mainSvc.js"></script>

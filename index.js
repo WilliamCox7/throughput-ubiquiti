@@ -3,12 +3,22 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var exec = require('child_process').execFile; //for calling iperf3 locally
 var rexec = require('remote-exec'); //for starting iperf3 server
+var dns = require('dns');
+var os = require('os');
 
 var port = 3000;
+var clientIp;
+dns.lookup(os.hostname(), function (err, ip) {
+  clientIp = ip;
+});
 
 var app = module.exports = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
+app.get('/clientIp', function(req, res) {
+  res.status(200).send(clientIp);
+});
 
 // var connection_options = {
 //   port: 22,
