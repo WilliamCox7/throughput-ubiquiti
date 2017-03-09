@@ -15,6 +15,7 @@
       <input type="text" placeholder="Client IP" ng-model="clientIp" />
       <input type="text" placeholder="Server IP" ng-change="auth(serverIp)" ng-model="serverIp" />
       <button ng-click="start(clientIp, serverIp, username, password)">Start</button>
+      <button class="stop-btn" ng-click="stop(clientIp, serverIp, username, password)">Stop</button>
       <div class="auth">
         <div class="corner"></div>
         <p>Please enter the credentials for {{serverIp}}. Then click start to begin.</p>
@@ -25,16 +26,16 @@
 
     <div class="results-graphs">
       <div class="results">
-        <div class="heading"><p>Sending</p><span>0.0 Mbps</span></div>
+        <div class="heading"><p>Client → Server</p><span>(mpbs)</span></div>
         <ol>
           <li ng-repeat="res in results track by $index" style="height: {{(res/100)*158}}px"><p>{{res}}</p></li>
         </ol>
       </div>
 
       <div class="results-r">
-        <div class="heading"><p>Recieving</p><span>0.0 Mbps</span></div>
+        <div class="heading"><p>Server → Client</p><span>(mpbs)</span></div>
         <ol>
-          <li ng-repeat="resR in resultsReverse track by $index" ng-style="{height: '{{(resR/100)*158}}px'}"><p>{{resR}}</p></li>
+          <li ng-repeat="resR in resultsReverse track by $index" style="height: {{(resR/100)*158}}px"><p>{{resR}}</p></li>
         </ol>
       </div>
     </div>

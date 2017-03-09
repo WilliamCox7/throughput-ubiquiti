@@ -2,7 +2,7 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   $scope.results = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.resultsReverse = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.serverIp = null;
-  $scope.serverMessage = 'Server is Disconnected...';
+  $scope.serverMessage = 'Server is disconnected...';
   function getClientIp() {
     mainSvc.getClientIp().then(function(ip) {
       $scope.clientIp = ip;
@@ -24,7 +24,6 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   }
   $scope.start = function(clientIp, serverIp, username, password) {
     $('.auth').css('opacity', '0');
-    $scope.serverMessage = 'Starting Server...'
     mainSvc.startServer(clientIp, serverIp, username, password).then(function(result) {
       $scope.serverMessage = result;
     });
@@ -32,8 +31,23 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
 
   socket.on('tcp', function(data) {
     $scope.results.shift();
-    $scope.results.push(Number(data).toFixed(1));
+    $scope.results.push(Number(data[0]).toFixed(1));
+    $scope.resultsReverse.shift();
+    $scope.resultsReverse.push(Number(data[1]).toFixed(1));
     $scope.serverMessage = 'Server Connected!';
   });
+
+  // socket.on('tcpR', function(data) {
+  //   $scope.resultsReverse.shift();
+  //   $scope.resultsReverse.push(Number(data).toFixed(1));
+  //   $scope.serverMessage = 'Server Connected!';
+  // });
+
+  $scope.stop = function(clientIp, serverIp, username, password) {
+    mainSvc.stopServer(clientIp, serverIp, username, password).then(function(result) {
+      $scope.serverMessage = result;
+    });
+  };
+
 
 });

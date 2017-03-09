@@ -47,7 +47,7 @@ input:focus {outline:0;}
   width: 192px;
   background: slategray;
   border-radius: 3px;
-  margin-left: 232px;
+  margin-left: 203px;
   margin-top: 70px;
   padding: 5px;
   -webkit-transition: opacity 0.5s ease-out;
@@ -75,6 +75,11 @@ input:focus {outline:0;}
   border-radius: 2px;
   font-weight: bold;
   background: #242738;
+  width: 138px;
+}
+
+.stop-btn {
+  margin-right: 20px;
 }
 
 ::-webkit-input-placeholder {
@@ -94,7 +99,6 @@ input:focus {outline:0;}
   margin-left: 20px;
   margin-top: 20px;
   width: 100%;
-  margin-right: 20px;
   background: #242738;
   border: solid 2px slategray;
   color: slategray;
@@ -184,4 +188,5 @@ li p {
   font-size: 11px;
   color: white;
   padding: 5px;
+  margin-top: -20px;
 }
