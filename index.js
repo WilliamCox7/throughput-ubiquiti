@@ -20,30 +20,33 @@ app.get('/clientIp', function(req, res) {
   res.status(200).send(clientIp);
 });
 
+var switchedOn = false; serverIp = null;
+var io = require('socket.io').listen(8080);
+io.sockets.on('connection', function (socket) {
+    setInterval(function() {
+      if (switchedOn) {
+        exec('./iperf/iperf3.exe', ['-c', serverIp, '-i', 1, '-t', 1, '-J'], function(err, data) {
+          if (!err) {
+            var d = JSON.parse(data);
+            var mbps = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1);
+            socket.emit('tcp', mbps);
+          }
+        });
+      }
+    }, 1500);
+});
+
 app.post('/startServer', function(req, res) {
   var connection_options = {
     port: 22,
     username: req.body.username,
     password: req.body.password
   }
-
-  rexec(req.body.serverIp, 'iperf3 -s', connection_options, function(err) {
-    if (err) {
-        console.log(err);
-      } else {
-        exec('./iperf/iperf3.exe', ['-c', req.body.serverIp, '-t', 1, '-J'], function(err, data) {
-          if (err) {
-            console.log(err);
-            console.log(data.toString());
-          } else {
-            console.log('here');
-            console.log(data.toString());
-            res.status(200).send(data.toString());
-          }
-        });
-      }
+  serverIp = req.body.serverIp;
+  rexec(serverIp, 'iperf3 -s', connection_options, function(err) {
+    switchedOn = true;
+    res.status(200).send('Server is on...');
   });
-
 });
 
 /* SERVER */

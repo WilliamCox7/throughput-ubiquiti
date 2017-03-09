@@ -1,4 +1,4 @@
-angular.module('throughput').controller('mainCtrl', function($scope, mainSvc) {
+angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, socket) {
   $scope.results = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.resultsReverse = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.serverIp = null;
@@ -22,9 +22,15 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc) {
     }
   }
   $scope.start = function(clientIp, serverIp, username, password) {
+    $('.auth').css('opacity', '0');
     mainSvc.startServer(clientIp, serverIp, username, password).then(function(result) {
-      $('.auth').css('opacity', '0');
       console.log(result);
     });
   }
+
+  socket.on('tcp', function(data) {
+    $scope.results.shift();
+    $scope.results.push(Number(data).toFixed(1));
+  });
+
 });
