@@ -20,26 +20,31 @@ app.get('/clientIp', function(req, res) {
   res.status(200).send(clientIp);
 });
 
-// var connection_options = {
-//   port: 22,
-//   username: result.username,
-//   password: result.password
-// };
-//
-// rexec('192.168.127.233', 'iperf3 -s', connection_options, function(err) {
-//   console.log('Connecting to server...');
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     exec('./iperf/iperf3.exe', ['-c', '192.168.127.233'], function(err, data) {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log(data.toString());
-//       }
-//     });
-//   }
-// });
+app.post('/startServer', function(req, res) {
+  var connection_options = {
+    port: 22,
+    username: req.body.username,
+    password: req.body.password
+  }
+
+  rexec(req.body.serverIp, 'iperf3 -s', connection_options, function(err) {
+    if (err) {
+        console.log(err);
+      } else {
+        exec('./iperf/iperf3.exe', ['-c', req.body.serverIp, '-t', 1, '-J'], function(err, data) {
+          if (err) {
+            console.log(err);
+            console.log(data.toString());
+          } else {
+            console.log('here');
+            console.log(data.toString());
+            res.status(200).send(data.toString());
+          }
+        });
+      }
+  });
+
+});
 
 /* SERVER */
 app.listen(port, function() {

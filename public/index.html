@@ -13,12 +13,12 @@
     <div class="form">
       <input type="text" placeholder="Client IP" ng-model="clientIp" />
       <input type="text" placeholder="Server IP" ng-change="auth(serverIp)" ng-model="serverIp" />
-      <button ng-click="start()">Start</button>
+      <button ng-click="start(clientIp, serverIp, username, password)">Start</button>
       <div class="auth">
         <div class="corner"></div>
         <p>Please enter the credentials for {{serverIp}}. Then click start to begin.</p>
-        <input type="text" placeholder="username" />
-        <input type="password" placeholder="password" / />
+        <input type="text" placeholder="username" ng-model="username" />
+        <input type="password" placeholder="password" ng-model="password" / />
       </div>
     </div>
 

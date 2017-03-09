@@ -21,7 +21,10 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc) {
       $('.auth input').css('border-color', '#b34141');
     }
   }
-  $scope.start = function() {
-    $('.auth').css('opacity', '0');
+  $scope.start = function(clientIp, serverIp, username, password) {
+    mainSvc.startServer(clientIp, serverIp, username, password).then(function(result) {
+      $('.auth').css('opacity', '0');
+      console.log(result);
+    });
   }
 });
