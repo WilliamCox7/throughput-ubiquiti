@@ -1,11 +1,30 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+/* GLOBAL THROUGHOUT DOCUMENT */
 body {
   font-family: 'Open Sans', sans-serif;
   background: #373948;
   padding-top: 30px;
 }
 
+button:focus {outline:0;}
+input:focus {outline:0;}
+select:focus {outline-color: slategray;}
+
+::-webkit-input-placeholder {
+  color: slategray;
+}
+::-moz-placeholder {
+  color: slategray;
+}
+:-ms-input-placeholder {
+  color: slategray;
+}
+:-moz-placeholder {
+  color: slategray;
+}
+
+/* FORM */
 h1 {
   max-width: 540px;
   margin: auto;
@@ -15,22 +34,8 @@ h1 {
   color: slategray;
 }
 
-button:focus {outline:0;}
-input:focus {outline:0;}
-select:focus {outline-color: slategray;}
-
-select {
-  background: none;
-  color: slategray;
-  border-color: slategray;
-}
-
-.select-margin {
-  margin-top: 2px;
-}
-
-.history-ol {
-  margin-top: -7px;
+.header-form {
+  position: relative;
 }
 
 .form {
@@ -44,49 +49,6 @@ select {
           justify-content: flex-start;
 }
 
-.corner {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: slategray;
-  margin-top: -9px;
-  margin-left: 18px;
-  z-index: -1;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-}
-
-.auth {
-  opacity: 0;
-  position: absolute;
-  width: 192px;
-  background: slategray;
-  border-radius: 3px;
-  margin-left: calc((100% - 138px) / 2);
-  margin-top: 13px;
-  padding: 5px;
-  -webkit-transition: opacity 0.5s ease-out;
-  transition: opacity 0.5s ease-out;
-}
-
-.auth input {
-  margin-left: 0px;
-  margin-top: 0px;
-  width: 158px;
-  padding: 10px;
-  border: solid 2px slategray;
-  color: slategray;
-  border-radius: 2px;
-  font-weight: bold;
-  background: #242738;
-}
-
-.auth p {
-  font-size: 12px;
-  padding: 4px;
-  color: #242738;
-}
-
 .form input {
   margin-left: 20px;
   margin-top: 20px;
@@ -97,23 +59,6 @@ select {
   font-weight: bold;
   background: #242738;
   width: 138px;
-}
-
-.stop-btn {
-  margin-right: 20px;
-}
-
-::-webkit-input-placeholder {
-  color: slategray;
-}
-::-moz-placeholder {
-  color: slategray;
-}
-:-ms-input-placeholder {
-  color: slategray;
-}
-:-moz-placeholder {
-  color: slategray;
 }
 
 .form button {
@@ -133,17 +78,54 @@ select {
   color: #242738
 }
 
-.heading {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  color: slategray;
-  font-size: 12px;
+.stop-btn {
+  margin-right: 20px;
 }
 
+.auth {
+  opacity: 0;
+  position: absolute;
+  width: 192px;
+  background: slategray;
+  border-radius: 3px;
+  margin-left: calc((100% - 138px) / 2);
+  margin-top: 13px;
+  padding: 5px;
+  -webkit-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
+}
+
+.corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: slategray;
+  margin-top: -9px;
+  margin-left: 18px;
+  z-index: -1;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.auth p {
+  font-size: 12px;
+  padding: 4px;
+  color: #242738;
+}
+
+.auth input {
+  margin-left: 0px;
+  margin-top: 0px;
+  width: 158px;
+  padding: 10px;
+  border: solid 2px slategray;
+  color: slategray;
+  border-radius: 2px;
+  font-weight: bold;
+  background: #242738;
+}
+
+/* GRAPHS */
 .results-graphs {
   max-width: 540px;
   margin: auto;
@@ -157,12 +139,6 @@ select {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-.server-message {
-  text-align: center;
-  color: slategray;
-  margin-bottom: 20px;
 }
 
 .results {
@@ -197,6 +173,17 @@ select {
   background: #242738;
 }
 
+.heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: slategray;
+  font-size: 12px;
+}
+
 ol {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -208,6 +195,10 @@ ol {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+.history-ol {
+  margin-top: -7px;
 }
 
 li {
@@ -222,4 +213,14 @@ li p {
   color: white;
   padding: 5px;
   margin-top: -20px;
+}
+
+select {
+  background: none;
+  color: slategray;
+  border-color: slategray;
+}
+
+.select-margin {
+  margin-top: 2px;
 }

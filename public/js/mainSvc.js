@@ -1,4 +1,6 @@
 angular.module('throughput').service('mainSvc', function($http) {
+
+  /* GETS IP FROM USER COMPUTER */
   this.getClientIp = function() {
     return $http({
       method: 'GET',
@@ -7,24 +9,26 @@ angular.module('throughput').service('mainSvc', function($http) {
       return ip.data;
     });
   }
+
+  /* STARTS IPERF SERVER */
   this.startServer = function(clientIp, serverIp, username, password) {
-    return $http({
+    $http({
       method: 'POST',
       url: '/startServer',
       data: {clientIp: clientIp, serverIp: serverIp, username: username, password: password}
-    }).then(function(result) {
-      return result.data;
     });
   }
+
+  /* STOPS IPERF SERVER */
   this.stopServer = function(clientIp, serverIp, username, password) {
-    return $http({
+    $http({
       method: 'POST',
       url: '/stopServer',
       data: {clientIp: clientIp, serverIp: serverIp, username: username, password: password}
-    }).then(function(result) {
-      return result.data;
     });
   }
+
+  /* GETS TCP HISTORY */
   this.getHistory = function() {
     return $http({
       method: 'GET',
@@ -33,4 +37,5 @@ angular.module('throughput').service('mainSvc', function($http) {
       return history.data;
     });
   }
+
 });
