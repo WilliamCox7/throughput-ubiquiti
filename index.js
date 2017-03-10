@@ -57,7 +57,7 @@ io.sockets.on('connection', function (socket) {
 
             // get parsed data and retrieve mbps
             var d = JSON.parse(data);
-            if (d) { var mbps = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1); }
+            if (d) { var mbps = (d.intervals[0].streams[0].bits_per_second / 1000000).toFixed(1); }
 
             // store mbps in upstream document
             MongoClient.connect(url, function(err, db) {
@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
 
               // get parsed data and retrive mbps
               var d = JSON.parse(dataR);
-              if (d) { var mbpsR = (d.intervals[0].streams[0].bits_per_second / 10000000).toFixed(1); }
+              if (d) { var mbpsR = (d.intervals[0].streams[0].bits_per_second / 1000000).toFixed(1); }
 
               // store mbps in downstream document
               MongoClient.connect(url, function(err, db) {

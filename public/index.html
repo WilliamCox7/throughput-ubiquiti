@@ -31,16 +31,20 @@
       <div class="results">
         <div class="heading"><p>Upstream</p><span>(mpbs)</span></div>
           <ol>
-            <li ng-repeat="res in results track by $index" style="height: {{(res/100)*158}}px"><p>{{res}}</p></li>
+            <li ng-repeat="res in results track by $index" style="height: {{(res/maxRes)*100}}px"><p>{{res}}</p></li>
           </ol>
         </div>
 
       <div class="results-r">
         <div class="heading"><p>Downstream</p><span>(mpbs)</span></div>
           <ol>
-            <li ng-repeat="resR in resultsReverse track by $index" style="height: {{(resR/100)*158}}px"><p>{{resR}}</p></li>
+            <li ng-repeat="resR in resultsReverse track by $index" style="height: {{(resR/maxResR)*100}}px"><p>{{resR}}</p></li>
           </ol>
         </div>
+    </div>
+
+    <div class="server-message">
+      {{serverMessage}}
     </div>
 
     <div class="results-graphs">
@@ -74,7 +78,7 @@
           <span class="select-margin">(mpbs)</span>
         </div>
           <ol class="history-ol">
-            <li ng-repeat="resH in resultsHistory track by $index" style="height: {{(resH/100)*158}}px"><p>{{resH}}</p></li>
+            <li ng-repeat="resH in resultsHistory track by $index" style="height: {{(resH/maxResH)*100}}px"><p>{{resH}}</p></li>
           </ol>
         </div>
       </div>

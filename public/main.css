@@ -162,6 +162,12 @@ h1 {
   background: #242738;
 }
 
+.server-message {
+  text-align: center;
+  color: slategray;
+  margin-bottom: 20px;
+}
+
 .history {
   min-width: 500px;
   height: 200px;

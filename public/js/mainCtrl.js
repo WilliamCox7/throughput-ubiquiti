@@ -9,6 +9,7 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   $scope.hourVal = 'hh', $scope.minuteVal = 'mm', $scope.secondVal = 'ss';
   $scope.days = ['dd'], $scope.months = ['mm'], $scope.years = ['yyyy'];
   $scope.hours = ['hh'], $scope.minutes = ['mm'], $scope.seconds = ['ss'];
+  $scope.serverMessage = 'Server Disconnected...';
   var histUp = [], histDown = [], hist = [];
 
   getClientIp(); // get client ip on load
@@ -38,20 +39,34 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   $scope.start = function(clientIp, serverIp, username, password) {
     $('.auth').css('opacity', '0'); // hides auth form when started
     mainSvc.startServer(clientIp, serverIp, username, password);
+    $scope.serverMessage = 'Starting Server...'
   }
 
   // stops iperf server
   $scope.stop = function(clientIp, serverIp, username, password) {
     mainSvc.stopServer(clientIp, serverIp, username, password);
+    $scope.serverMessage = 'Server is Disconnected...';
   };
 
   // socket recieves tcp data every 1.5 seconds
   // adds data to results displayed in graphs
+  $scope.maxRes = 0;
+  $scope.maxResR = 0;
+  $scope.maxResH = 0;
   socket.on('tcp', function(data) {
     $scope.results.shift();
     $scope.results.push(Number(data[0]).toFixed(1));
+    if (Number(data[0]).toFixed(1) > $scope.maxRes) {
+      $scope.maxRes = Number(data[0]).toFixed(1);
+    }
     $scope.resultsReverse.shift();
     $scope.resultsReverse.push(Number(data[1]).toFixed(1));
+    if (Number(data[1]).toFixed(1) > $scope.maxResR) {
+      $scope.maxResR = Number(data[1]).toFixed(1);
+    }
+    if ($scope.serverMessage !== 'Server is Disconnected...') {
+      $scope.serverMessage = 'Server Connected!';
+    }
   });
 
   // finds history opon selection
@@ -156,6 +171,9 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
           if (hist.length - i <= 13) {
             $scope.resultsHistory.shift();
             $scope.resultsHistory.push(Number(tuple.mbps).toFixed(1));
+            if (Number(tuple.mbps).toFixed(1) > $scope.maxResR) {
+              $scope.maxResH = Number(tuple.mbps).toFixed(1);
+            }
           }
 
         }); // end of hist.forEach
