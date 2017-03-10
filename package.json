@@ -9,11 +9,10 @@
     "child_process": "^1.0.2",
     "dns": "^0.2.2",
     "express": "^4.15.2",
-    "fs": "0.0.1-security",
     "mongodb": "^2.2.24",
-    "mongojs": "^2.4.0",
     "os": "^0.1.1",
-    "remote-exec": "0.0.3"
+    "remote-exec": "0.0.3",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {},
   "scripts": {
