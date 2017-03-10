@@ -8,7 +8,6 @@ angular.module('throughput').service('mainSvc', function($http) {
     });
   }
   this.startServer = function(clientIp, serverIp, username, password) {
-    console.log('CONNECTING?');
     return $http({
       method: 'POST',
       url: '/startServer',

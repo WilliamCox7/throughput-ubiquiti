@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "assert": "^1.4.1",
     "body-parser": "^1.17.1",
     "child_process": "^1.0.2",
     "dns": "^0.2.2",
     "express": "^4.15.2",
+    "mongodb": "^2.2.24",
+    "mongojs": "^2.4.0",
     "os": "^0.1.1",
     "remote-exec": "0.0.3"
   },

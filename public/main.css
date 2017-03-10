@@ -17,6 +17,21 @@ h1 {
 
 button:focus {outline:0;}
 input:focus {outline:0;}
+select:focus {outline-color: slategray;}
+
+select {
+  background: none;
+  color: slategray;
+  border-color: slategray;
+}
+
+.select-margin {
+  margin-top: 2px;
+}
+
+.history-ol {
+  margin-top: -7px;
+}
 
 .form {
   max-width: 540px;

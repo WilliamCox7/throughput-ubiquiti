@@ -2,7 +2,6 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   $scope.results = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.resultsReverse = [null, null, null, null, null, null, null, null, null, null, null, null, null];
   $scope.serverIp = null;
-  $scope.serverMessage = 'Server is disconnected...';
   function getClientIp() {
     mainSvc.getClientIp().then(function(ip) {
       $scope.clientIp = ip;
@@ -25,7 +24,7 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
   $scope.start = function(clientIp, serverIp, username, password) {
     $('.auth').css('opacity', '0');
     mainSvc.startServer(clientIp, serverIp, username, password).then(function(result) {
-      $scope.serverMessage = result;
+      console.log(result);
     });
   }
 
@@ -34,27 +33,115 @@ angular.module('throughput').controller('mainCtrl', function($scope, mainSvc, so
     $scope.results.push(Number(data[0]).toFixed(1));
     $scope.resultsReverse.shift();
     $scope.resultsReverse.push(Number(data[1]).toFixed(1));
-    if ($scope.serverMessage !== 'Server Connected!' && $scope.serverMessage !== 'Server Disconnected...') {
-      $scope.serverMessage = 'Server Connected!';
-    }
   });
 
   $scope.stop = function(clientIp, serverIp, username, password) {
     mainSvc.stopServer(clientIp, serverIp, username, password).then(function(result) {
-      $scope.serverMessage = result;
+
     });
   };
 
+  var histUp = [], histDown = [], hist = [];
+  $scope.monthVal = 'mm';
+  $scope.dayVal = 'dd';
+  $scope.yearVal = 'yyyy';
+  $scope.hourVal = 'hh';
+  $scope.minuteVal = 'mm';
+  $scope.secondVal = 'ss';
+  $scope.findHistory = function() {
+    var checkMonth, checkDay, checkYear, checkHour, checkMinute, checkSecond, date, count = 0, begin = false;
+    hist.forEach(function(tuple, i) {
+
+      date = new Date(tuple.date);
+      checkMonth = date.getMonth(); checkMonth++;
+      checkDay = date.getDate();
+      checkYear = date.getFullYear();
+      checkHour = date.getHours();
+      checkMinute = date.getMinutes();
+      checkSecond = date.getSeconds();
+
+      if (!begin) {
+        if (Number($scope.monthVal) === checkMonth || $scope.monthVal === 'mm') {
+          if (Number($scope.dayVal) === checkDay || $scope.dayVal === 'dd') {
+            if (Number($scope.yearVal) === checkYear || $scope.yearVal === 'yyyy') {
+              if (Number($scope.hourVal) === checkHour || $scope.hourVal === 'hh') {
+                if (Number($scope.minuteVal) === checkMinute || $scope.minuteVal === 'mm') {
+                  if (Number($scope.secondVal) === checkSecond || $scope.secondVal === 'ss') {
+                    begin = true;
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else if (count < 13) {
+        $scope.resultsHistory.shift();
+        $scope.resultsHistory.push(Number(tuple.mbps).toFixed(1));
+        count++;
+      }
+
+    });
+  }
+
+  $scope.arrow = '↑';
+  $scope.switchHist = function(val) {
+    if (val === '↑') {
+      hist = histUp;
+    } else {
+      hist = histDown;
+    }
+    $scope.findHistory();
+  }
+
   $scope.resultsHistory = [null, null, null, null, null, null, null, null, null, null, null, null, null];
+  $scope.days = ['dd'];
+  $scope.months = ['mm'];
+  $scope.years = ['yyyy'];
+  $scope.hours = ['hh'];
+  $scope.minutes = ['mm'];
+  $scope.seconds = ['ss'];
   function getHistory() {
     mainSvc.getHistory().then(function(history) {
-      for (var i = history.length-1; i >= history.length-13; i--) {
-        if (history[i]) {
-          $scope.resultsHistory.shift();
-          $scope.resultsHistory.push(Number(history[i][1]));
-        }
+      histUp = history.upstream;
+      histDown = history.downstream;
+      for (var j = 0; j < 2; j++) {
+        if (j === 0) { hist = histDown; }
+        else { hist = histUp; }
+        hist.forEach(function(tuple, i) {
+          var date = new Date(tuple.date);
+          var month = date.getMonth(); month++;
+          var day = date.getDate();
+          var year = date.getFullYear();
+          var hour = date.getHours();
+          var minute = date.getMinutes();
+          var second = date.getSeconds();
+
+          if ($scope.months.indexOf(month.toString()) == -1) {
+            $scope.months.push(month.toString());
+          }
+          if ($scope.days.indexOf(day.toString()) == -1) {
+            $scope.days.push(day.toString());
+          }
+          if ($scope.years.indexOf(year.toString()) == -1) {
+            $scope.years.push(year.toString());
+          }
+          if ($scope.hours.indexOf(hour.toString()) == -1) {
+            $scope.hours.push(hour.toString());
+          }
+          if ($scope.minutes.indexOf(minute.toString()) == -1) {
+            $scope.minutes.push(minute.toString());
+          }
+          if ($scope.seconds.indexOf(second.toString()) == -1) {
+            $scope.seconds.push(second.toString());
+          }
+
+          if (hist.length - i <= 13) {
+            $scope.resultsHistory.shift();
+            $scope.resultsHistory.push(Number(tuple.mbps).toFixed(1));
+          }
+        });
       }
-      $scope.historyMessage = 'Displaying last session...';
+
     });
   }
   getHistory();

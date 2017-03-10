@@ -43,31 +43,41 @@
         </div>
     </div>
 
-    <div class="server-message">
-      {{serverMessage}}
-    </div>
-
     <div class="results-graphs">
       <div class="history">
         <div class="heading">
-          <p>History</p>
+          <p class="select-margin">History</p>
           <div class="date-select">
-            <select></select>
-            <select></select>
-            <select></select>
+            <select ng-model="monthVal" ng-change="findHistory()">
+              <option ng-repeat="month in months" value="{{month}}">{{month}}</option>
+            </select>
+            <select ng-model="dayVal" ng-change="findHistory()">
+              <option ng-repeat="day in days" value="{{day}}">{{day}}</option>
+            </select>
+            <select ng-model="yearVal" ng-change="findHistory()">
+              <option ng-repeat="year in years" value="{{year}}">{{year}}</option>
+            </select>
+            <select ng-model="hourVal" ng-change="findHistory()">
+              <option ng-repeat="hour in hours" value="{{hour}}">{{hour}}</option>
+            </select>
+            <select ng-model="minuteVal" ng-change="findHistory()">
+              <option ng-repeat="minute in minutes" value="{{minute}}">{{minute}}</option>
+            </select>
+            <select ng-model="secondVal" ng-change="findHistory()">
+              <option ng-repeat="second in seconds" value="{{second}}">{{second}}</option>
+            </select>
           </div>
-          <select></select>
-          <span>(mpbs)</span>
+          <select ng-model="arrow" ng-change="switchHist(arrow)">
+            <option value="↑">↑</option>
+            <option value="↓">↓</option>
+          </select>
+          <span class="select-margin">(mpbs)</span>
         </div>
-          <ol>
+          <ol class="history-ol">
             <li ng-repeat="resH in resultsHistory track by $index" style="height: {{(resH/100)*158}}px"><p>{{resH}}</p></li>
           </ol>
         </div>
       </div>
-    </div>
-
-    <div class="server-message">
-      {{historyMessage}}
     </div>
 
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
