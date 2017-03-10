@@ -18,12 +18,12 @@ DISCLAIMER: Only works on windows. I don't have the resources to test for osx/li
 2. Enter the credentials for that ip address
 3. Click start.
 
-### View History
+### History Functionality
 1. Dropdown any field
-  a. options are in chronological order from when they were stored
-  b. not all options in dropdown match a timestamp
-  c. history does not include currently-running throughput
-    i. refresh to view added history
+2. ptions are in chronological order from when they were stored
+3. Not all options in dropdown match a timestamp
+4. History does not include currently-running throughput
+5. Refresh to view added history
     
 ## Client/AP Specifications (tested for)
 Client: Razer Blade Stealth
