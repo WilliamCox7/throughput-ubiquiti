@@ -20,7 +20,7 @@ DISCLAIMER: Only works on windows. I don't have the resources to test for osx/li
 
 ### History Functionality
 1. Dropdown any field
-2. ptions are in chronological order from when they were stored
+2. Options are in chronological order from when they were stored
 3. Not all options in dropdown match a timestamp
 4. History does not include currently-running throughput
 5. Refresh to view added history
