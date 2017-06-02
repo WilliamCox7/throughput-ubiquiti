@@ -9,7 +9,8 @@ var dns = require('dns');
 var os = require('os');
 
 /* OTHER VARS */
-var port = 3000;
+app.set('port', (process.env.PORT || 3000));
+app.set('socket', (process.env.SOCKET || 8080))
 var url = 'mongodb://localhost:27017/tcphistory';
 var username, password; // stores credentials from client input
 var clientIp; //client ip retrived from users computer
@@ -38,7 +39,7 @@ var insertDocuments = function(db, callback, mbps, coll) {
 var serverIp; // 192.168.127.233
 var switchedOn = false; //boolean to manage socket.io. If true, emit tcp to client
 var terminate = false; //boolean to manage stop command on client. If true, kill iperf server
-var io = require('socket.io').listen(8080);
+var io = require('socket.io').listen(app.get('socket'));
 io.sockets.on('connection', function (socket) {
 
     // interval set to 1.5 seconds (send tcp every 1.5 seconds)
@@ -194,6 +195,6 @@ app.get('/getHistory', function(req, res) {
 }); // end of get history endpoint
 
 /* SERVER */
-app.listen(port, function() {
-  console.log('port ' + port + ' is listening');
+app.listen(app.get('port'), function() {
+  console.log('port ' + app.get('port') + ' is listening');
 });
