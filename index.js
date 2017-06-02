@@ -9,7 +9,6 @@ var dns = require('dns');
 var os = require('os');
 
 /* OTHER VARS */
-var url = 'mongodb://localhost:27017/tcphistory';
 var username, password; // stores credentials from client input
 var clientIp; //client ip retrived from users computer
 
@@ -17,6 +16,7 @@ var clientIp; //client ip retrived from users computer
 var app = module.exports = express();
 app.set('port', (process.env.PORT || 3000));
 app.set('socket', (process.env.SOCKET || 8080));
+app.set('url', (process.env.MONGODB_URI || 'mongodb://localhost:27017/tcphistory'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
@@ -61,7 +61,7 @@ io.sockets.on('connection', function (socket) {
             if (d) { var mbps = (d.intervals[0].streams[0].bits_per_second / 1000000).toFixed(1); }
 
             // store mbps in upstream document
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(app.get('url'), function(err, db) {
               assert.equal(null, err);
               insertDocuments(db, function(result) {
                 db.close();
@@ -86,7 +86,7 @@ io.sockets.on('connection', function (socket) {
               if (d) { var mbpsR = (d.intervals[0].streams[0].bits_per_second / 1000000).toFixed(1); }
 
               // store mbps in downstream document
-              MongoClient.connect(url, function(err, db) {
+              MongoClient.connect(app.get('url'), function(err, db) {
                 assert.equal(null, err);
                 insertDocuments(db, function(result) {
                   db.close();
@@ -156,7 +156,7 @@ app.get('/getHistory', function(req, res) {
   var history = { upstream: [], downstream: []};
 
   // get all info stored in upstream and downstream documents
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(app.get('url'), function(err, db) {
     assert.equal(null, err);
     cursor = db.collection('upstream').find();
     cursor2 = db.collection('downstream').find();
