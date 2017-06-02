@@ -21,8 +21,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 /* MONGODB FUNCTIONS */
-exec('./mongo/mongod.exe');
-exec('./mongo/mongo.exe');
+// exec('./mongo/mongod.exe');
+// exec('./mongo/mongo.exe');
 // inserts tcp into either upstream or downstream document
 var insertDocuments = function(db, callback, mbps, coll) {
   var date = new Date();
