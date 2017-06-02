@@ -1,7 +1,5 @@
 # Throughput Test
 
-DISCLAIMER: Only works on windows. I don't have the resources to test for osx/linux.
-
 ## Installation
 
 1. git clone https://github.com/WilliamCox7/throughput-ubiquiti
