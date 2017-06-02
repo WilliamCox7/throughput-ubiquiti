@@ -9,14 +9,14 @@ var dns = require('dns');
 var os = require('os');
 
 /* OTHER VARS */
-app.set('port', (process.env.PORT || 3000));
-app.set('socket', (process.env.SOCKET || 8080))
 var url = 'mongodb://localhost:27017/tcphistory';
 var username, password; // stores credentials from client input
 var clientIp; //client ip retrived from users computer
 
 /* APP */
 var app = module.exports = express();
+app.set('port', (process.env.PORT || 3000));
+app.set('socket', (process.env.SOCKET || 8080));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
